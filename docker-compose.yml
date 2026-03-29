@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: nihongo-app
+    restart: unless-stopped
+    working_dir: /var/www/backend
+    volumes:
+      - ./backend:/var/www/backend
+    networks:
+      - nihongo-net
+    depends_on:
+      - db
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    container_name: nihongo-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/backend
+      - ./frontend/dist:/var/www/frontend
+    networks:
+      - nihongo-net
+    depends_on:
+      - app
+      - frontend
+
+  db:
+    image: mysql:8.0
+    container_name: nihongo-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: nihongo_game
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: nihongo
+      MYSQL_PASSWORD: nihongo_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - nihongo-net
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    container_name: nihongo-frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    networks:
+      - nihongo-net
+    command: sh -c "cd /app && npm install && npm run build"
+
+networks:
+  nihongo-net:
+    driver: bridge
+
+volumes:
+  dbdata:
