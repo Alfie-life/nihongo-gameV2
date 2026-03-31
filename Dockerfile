@@ -17,7 +17,7 @@ FROM composer:2 AS backend-build
 WORKDIR /app
 
 # Create fresh Laravel 11 project (scaffolds ALL required files)
-RUN composer create-project laravel/laravel /app --prefer-dist --no-interaction --no-dev
+RUN composer create-project laravel/laravel:^11.0 /app --prefer-dist --no-interaction --no-dev
 
 # Install Sanctum
 
