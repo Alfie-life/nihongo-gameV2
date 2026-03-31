@@ -46,7 +46,7 @@ RUN composer dump-autoload --optimize --no-dev
 # ==========================================
 # Stage 3: Production runtime
 # ==========================================
-FROM php:8.2-fpm-alpine
+FROM php:8.4-fpm-alpine
 
 RUN apk add --no-cache \
     nginx \
