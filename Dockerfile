@@ -17,7 +17,7 @@ FROM composer:2 AS backend-build
 WORKDIR /app
 
 # Create fresh Laravel 11 project (scaffolds ALL required files)
-RUN composer create-project laravel/laravel:^11.0 /app --prefer-dist --no-interaction --no-dev
+RUN composer create-project laravel/laravel:^11.0 /app --prefer-dist --no-interaction
 
 # Install Sanctum
 RUN composer require laravel/sanctum --no-interaction
@@ -41,7 +41,7 @@ COPY backend/config/cors.php /app/config/cors.php
 COPY backend/config/sanctum.php /app/config/sanctum.php
 
 # Regenerate autoload
-RUN composer dump-autoload --optimize --no-dev
+RUN composer dump-autoload --optimize
 
 # ==========================================
 # Stage 3: Production runtime
