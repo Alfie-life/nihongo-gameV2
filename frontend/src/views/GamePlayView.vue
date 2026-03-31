@@ -67,9 +67,7 @@
           Q{{ questionNumber }} / {{ totalQuestions }}
           <v-chip size="x-small" class="ml-2" variant="tonal">{{ jlptLabel }}</v-chip>
         </div>
-        <div class="text-h5 font-weight-bold question-text">
-          {{ question.sentence }}
-        </div>
+        <div class="text-h5 font-weight-bold question-text" v-html="question.sentence"></div>
       </v-card>
 
       <!-- Road scene -->
@@ -307,8 +305,18 @@ onMounted(loadQuestion)
 
 .question-text {
   font-family: 'Noto Sans JP', sans-serif;
-  line-height: 1.8;
+  line-height: 2.2;
   color: #2D2D2D;
+}
+
+.question-text ruby {
+  ruby-align: center;
+}
+
+.question-text rt {
+  font-size: 0.5em;
+  color: #888;
+  font-weight: normal;
 }
 
 /* Road scene */
