@@ -20,7 +20,7 @@ WORKDIR /app
 RUN composer create-project laravel/laravel /app --prefer-dist --no-interaction --no-dev
 
 # Install Sanctum
-RUN composer require laravel/sanctum --no-interaction --no-dev --update-no-dev
+
 
 # Overlay custom application code on top of scaffold
 COPY backend/bootstrap/app.php /app/bootstrap/app.php
